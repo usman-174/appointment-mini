@@ -6,10 +6,10 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserDetailsForm from "@/components/payment/userDetailsForm";
 
-
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUB_KEY);
 
 const bookAppointmentPage = () => {
+
   const [step, setStep] = useState(1);
   const [data, setData] = useState({
     appointmentId: "",

@@ -1,9 +1,13 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 const UserDetailsForm = ({ setData, data, setStep }) => {
+  const { user, isLoaded, } = useUser();
+
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -45,7 +49,16 @@ const UserDetailsForm = ({ setData, data, setStep }) => {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      setData((e) => ({
+        ...e,
+        name: user.fullName,
+        email: user.emailAddresses[0].emailAddress,
+      }));
+    }
+  }, [user, isLoaded]);
+  if(!isLoaded) return null
   return (
     <div className="min-h-screen  flex items-center justify-center">
       <div className="p-8 rounded-lg shadow-md  w-full md:w-2/3 lg:w-1/2 xl:w-1/3">

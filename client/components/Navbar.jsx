@@ -1,7 +1,10 @@
+"use client"
+import {  useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
+  const { isSignedIn } = useAuth();
   return (
     <div className="fixed w-full">
       <nav className=" flex shadow-md items-center  flex-col md:flex-row md:justify-between py-2 bg-slate-50">
@@ -29,6 +32,19 @@ const Navbar = () => {
                 Payments
               </li>
             </Link>
+            {isSignedIn ? (
+              <li>
+                <UserButton afterSignOutUrl="/" appearance={""} />
+              </li>
+            ) : 
+            
+            <Link href={"/signin"}>
+            <li className="w-full bg-black text-white py-2 px-4 
+            rounded-lg hover:shadow-md hover:bg-white hover:text-black transition
+             duration-300 ease-in-out">
+              LogIn
+            </li>
+          </Link>}
           </ul>
         </div>
       </nav>

@@ -16,6 +16,7 @@ if (!isProduction) {
   console.table(parsed);
   app.use(morgan("dev"));
 }
+
 let corsOptions = isProduction
   ? { origin: JSON.parse(process.env.ORIGIN) }
   : { origin: ['http://localhost:3000'] };
@@ -23,7 +24,7 @@ let corsOptions = isProduction
 const port = process.env.PORT || 5000;
 const URI = process.env.MONGO_URI;
 
- app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Parse JSON request bodies
 app.use(express.json());
@@ -51,6 +52,7 @@ process.on("unhandledRejection", (error) => {
   console.error("---------Exiting App---------");
   process.exit(1);
 });
+
 // Start the server and connect to the database
 app.listen(port, () => {
   console.log(`Server Listening to Port -> ${port}`);
